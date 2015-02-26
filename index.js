@@ -63,7 +63,9 @@ function createFromElement(el) {
 function getElementProperties(el) {
   var obj = {}
 
-  props.forEach(function(propName) {
+
+  for(var i=0; i<props.length; i++) {
+    var propName = props[i];
     if(!el[propName]) return
 
     // Special case: style
@@ -75,13 +77,13 @@ function getElementProperties(el) {
     if("style" == propName) {
       var css = {}
         , styleProp
-      for(var i=0; i<el.style.length; i++) {
-        styleProp = el.style[i]
+      for(var j=0; j<el.style.length; j++) {
+        styleProp = el.style[j]
         css[styleProp] = el.style.getPropertyValue(styleProp) // XXX: add support for "!important" via getPropertyPriority()!
       }
 
       obj[propName] = css
-      return
+      break
     }
 
     // Special case: dataset
@@ -99,7 +101,7 @@ function getElementProperties(el) {
       }
 
       obj[propName] = data
-      return
+      break
     }
     
     // Special case: attributes
@@ -112,7 +114,7 @@ function getElementProperties(el) {
     // default: just copy the property
     obj[propName] = el[propName]
     return
-  })
+  }
 
   return obj
 }
