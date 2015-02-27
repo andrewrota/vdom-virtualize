@@ -52,8 +52,12 @@ function createFromElement(el) {
   , properties = getElementProperties(el)
   , children = []
 
+  var childVNode;
   for (var i = 0; i < el.childNodes.length; i++) {
-    children.push(createVNode(el.childNodes[i]/*, i*/))
+    childVNode = createVNode(el.childNodes[i]/*, i*/);
+    if (childVNode) {
+      children.push(childVNode);
+    }
   }
 
   return new VNode(tagName, properties, children, null, namespace)
